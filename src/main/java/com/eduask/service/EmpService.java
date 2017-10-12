@@ -23,10 +23,24 @@ public class EmpService {
         this.empDao = empDao;
     }
     public List<Emp> getAllEmps(){
-        return empDao.selectEmp();
+        return empDao.selectEmps();
     }
 
     public void insertEmp(Emp emp) {
         empDao.insertEmp(emp);
+    }
+
+    public void deleteEmp(Integer id) {
+        empDao.deleteEmp(id);
+    }
+
+    public Emp seleteEmp(Integer id) {
+        Emp emp =empDao.selectEmp(id);
+
+        return empDao.selectEmp(id);
+    }
+
+    public void update(Emp emp) {
+        empDao.update(emp);
     }
 }
