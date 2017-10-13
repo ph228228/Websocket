@@ -8,11 +8,28 @@ public class Emp {
     private String emp_name;
     private String sex;
     private String address;
+    private Integer age;
+    private Double salary;
     private Dept dept;
 
     public Emp() {
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
 
     public Integer getEmp_id() {
         return emp_id;
@@ -61,6 +78,8 @@ public class Emp {
                 ", emp_name='" + emp_name + '\'' +
                 ", sex='" + sex + '\'' +
                 ", address='" + address + '\'' +
+                ", age=" + age +
+                ", salary=" + salary +
                 ", dept=" + dept +
                 '}';
     }

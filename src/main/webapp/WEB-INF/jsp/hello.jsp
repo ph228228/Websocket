@@ -44,6 +44,8 @@
         <th>员工姓名</th>
         <th>员工性别</th>
         <th>家庭住址</th>
+        <th>年龄</th>
+        <th>工资</th>
         <th>部门</th>
         <th>DELETE</th>
         <th>EDIT</th>
@@ -54,6 +56,8 @@
             <th>${emp1.emp_name}</th>
             <th>${emp1.sex}</th>
             <th>${emp1.address}</th>
+            <th>${emp1.age}</th>
+            <th>${emp1.salary}</th>
             <th>${emp1.dept.dept_name}</th>
             <th><a href="/HelloWorld/delEmp/${emp1.emp_id}" class="del">DELETE</a></th>
             <th><a href="/HelloWorld/editPrepare/${emp1.emp_id}" class="edit">EDIT</a></th>

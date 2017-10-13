@@ -35,8 +35,6 @@ public class EmpService {
     }
 
     public Emp seleteEmp(Integer id) {
-        Emp emp =empDao.selectEmp(id);
-
         return empDao.selectEmp(id);
     }
 

@@ -5,24 +5,38 @@
 
 <mapper  namespace="com.eduask.dao.EmpDao">
     <cache  eviction="LRU" flushInterval="500" size="50" readOnly="true"></cache>
-    <select id="selectEmps" resultType="com.eduask.beans.Emp">
-        select e.emp_id emp_id,e.emp_name emp_name,e.sex sex,e.address address
-        ,d.dept_id "dept.dept_id",d.dept_name "dept.dept_name",d.location "dept.location"
+    <select id="selectEmps" resultMap="emp_dept">
+        select e.emp_id emp_id,e.emp_name emp_name,e.sex sex,e.address address,e.age age,e.salary salary
+        ,d.dept_id dept_id,d.dept_name dept_name,d.location location
         from Emp e  LEFT JOIN dept d ON e.dept_id=d.dept_id ORDER BY e.emp_id
     </select>
-    <insert id="insertEmp" parameterType="com.eduask.beans.Emp">
-        insert into emp(emp_name,sex,address,dept_id) VALUES(#{emp_name},#{sex},#{address},#{dept.dept_id})
+    <resultMap id="emp_dept" type="Emp">
+        <id property="emp_id" column="emp_id"/>
+        <result property="emp_name" column="emp_name"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <result property="age" column="age"/>
+        <result property="salary" column="salary"/>
+        <association property="dept" javaType="Dept">
+            <id column="dept_id" property="dept_id"></id>
+            <result column="dept_name" property="dept_name" />
+            <result column="location" property="location" />
+        </association>
+    </resultMap>
+    <insert id="insertEmp" parameterType="Emp">
+        insert into emp(emp_name,sex,address,age,salary,dept_id) VALUES
+        (#{emp_name},#{sex},#{address},#{age},#{salary},#{dept.dept_id})
     </insert>
     <delete id="deleteEmp" parameterType="java.lang.Integer">
         delete from emp where emp_id=#{id}
     </delete>
-    <select id="selectEmp" resultType="com.eduask.beans.Emp" parameterType="java.lang.Integer">
-        select e.emp_id emp_id,e.emp_name emp_name,e.sex sex,e.address address
-        ,d.dept_id "dept.dept_id",d.dept_name "dept.dept_name",d.location "dept.location"
+    <select id="selectEmp" resultMap="emp_dept" parameterType="java.lang.Integer">
+        select e.emp_id emp_id,e.emp_name emp_name,e.sex sex,e.address address,e.age age,e.salary salary
+        ,d.dept_id dept_id,d.dept_name dept_name,d.location location
         from Emp e  LEFT JOIN dept d ON e.dept_id=d.dept_id WHERE e.emp_id=#{id}
     </select>
-    <update id="update" parameterType="com.eduask.beans.Emp">
+    <update id="update" parameterType="Emp">
         update emp set emp_name=#{emp_name},sex=#{sex}
-        ,address=#{address},dept_id=#{dept.dept_id} where emp_id=#{emp_id}
+        ,address=#{address},age=#{age},salary=#{salary},dept_id=#{dept.dept_id} where emp_id=#{emp_id}
     </update>
 </mapper>

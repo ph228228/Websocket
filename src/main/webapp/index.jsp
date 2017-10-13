@@ -11,8 +11,11 @@
     <a href="${pageContext.request.contextPath}/HelloWorld/scopeTest">scopeTest点这儿</a><br>
     <a href="${pageContext.request.contextPath}/HelloWorld/forward">有不懂的点我</a><br>
     <a href="${pageContext.request.contextPath}/HelloWorld/add">点我新增员工</a><br>
-    <form method="/upup/upload" >
-
+    <a href="${pageContext.request.contextPath}/upup/download">点我下载你懂得</a><br>
+    <form action="${pageContext.request.contextPath}/upup/upload" method="POST" enctype="multipart/form-data">
+        file:<input type="file" name="upload"/><br>
+        msg:<input type="text" name="desc">
+        <input type="submit">
     </form>
 
 </body>

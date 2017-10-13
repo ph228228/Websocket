@@ -5,7 +5,7 @@
 
 <mapper  namespace="com.eduask.dao.DeptDao">
     <cache  eviction="LRU" flushInterval="500" size="50" readOnly="true"></cache>
-    <select id="selectDepts" resultType="com.eduask.beans.Dept">
+    <select id="selectDepts" resultType="Dept">
         SELECT * FROM dept
     </select>
 </mapper>
