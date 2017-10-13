@@ -11,7 +11,9 @@
     <a href="${pageContext.request.contextPath}/HelloWorld/scopeTest">scopeTest点这儿</a><br>
     <a href="${pageContext.request.contextPath}/HelloWorld/forward">有不懂的点我</a><br>
     <a href="${pageContext.request.contextPath}/HelloWorld/add">点我新增员工</a><br>
+    <form method="/upup/upload" >
 
+    </form>
 
 </body>
 </html>

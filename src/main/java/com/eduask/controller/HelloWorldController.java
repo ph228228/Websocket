@@ -47,11 +47,7 @@ public class HelloWorldController {
                                @PathVariable("age") Integer age,
                                @RequestHeader("Connection") String Connection) {
         List<Emp> emps = empService.getAllEmps();
-        System.out.println("emps = [" + emps + "]");
         model.addAttribute("ok", emps);
-        System.out.println("ids = [" + ids + "]");
-        System.out.println("age = [" + age + "]");
-        System.out.println("Connection = [" + Connection + "]");
         return "hello";
 
     }
