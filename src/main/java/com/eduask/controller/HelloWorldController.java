@@ -6,10 +6,14 @@ import com.eduask.service.DeptService;
 import com.eduask.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -105,13 +109,20 @@ public class HelloWorldController {
     }
 
     @RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
-    public String addEmp(Emp emp) {
-
+    public String addEmp(@Valid Emp emp,BindingResult bindingResult,Map<String,Object> map) {
+        System.out.println("aaaa");
+        if (bindingResult.getErrorCount()>0) {
+            System.out.println(123123);
+            List<Dept> depts = deptService.selectEmps();
+            map.put("depts",depts);
+            return "edit";
+        }
             empService.insertEmp(emp);
         return "redirect:/HelloWorld/123/234/hello/235?id=111&name=jack";
     }
     @ModelAttribute
-    public void prepare(Map<String, Object> map, @RequestParam(value = "emp_id",required = false) Integer id) {
+    public void prepare(Map<String, Object> map, @RequestParam(value = "emp_id",required = false) Integer id,
+                        HttpServletRequest request, HttpServletResponse response) {
         if (id != null)
             map.put("emp", empService.seleteEmp(id));
     }

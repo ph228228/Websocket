@@ -45,6 +45,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <!-- 注册国际化资源文件到IOC容器中-->
     <bean id="messageSource"  class="org.springframework.context.support.ResourceBundleMessageSource">
         <!--指明国际化资源文件的文件名是什么-->
-        <property name="basename" value="validator"></property>
+        <property name="basename" value="validator"/>
+        <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 </beans>

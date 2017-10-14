@@ -10,6 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <title>修改信息</title>
 
 </head>
@@ -18,7 +19,7 @@
            modelAttribute="emp">
 
     <input type="hidden" name="emp_id" value="${emp.emp_id}">
-    姓名:<form:input path="emp_name"></form:input><br>
+    姓名:<form:input path="emp_name"></form:input><form:errors path="emp_name"/><br>
     <c:choose>
         <c:when test="${emp.emp_id == null}">
             性别:<form:radiobutton path="sex" value="男"/>男&nbsp<form:radiobutton path="sex" value="女"/>女<br>
@@ -27,8 +28,8 @@
             <input type="hidden" name="_method" value="put" id="medium">
         </c:otherwise>
     </c:choose>
-    年龄:<form:input path="age"></form:input><br>
-    工资:<form:input path="salary"></form:input><br>
+    年龄:<form:input path="age"></form:input><form:errors path="age"/><br>
+    工资:<form:input path="salary"></form:input><form:errors path="salary"/><br>
     地址:<form:input path="address"></form:input><br>
     部门:<form:select path="dept.dept_id" items="${requestScope.depts}" itemLabel="dept_name"
                     itemValue="dept_id"></form:select>

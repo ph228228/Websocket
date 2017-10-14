@@ -1,14 +1,25 @@
 package com.eduask.beans;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 /**
  * Created by Administrator on 2017/10/10.
  */
 public class Emp {
     private Integer emp_id;
+    @NotEmpty
     private String emp_name;
     private String sex;
     private String address;
+    @NumberFormat()
+    @Max(120)
+    @Min(1)
     private Integer age;
+    @NumberFormat(pattern = "###,###.###")
     private Double salary;
     private Dept dept;
 
