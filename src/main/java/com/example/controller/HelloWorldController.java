@@ -1,9 +1,9 @@
-package com.eduask.controller;
+package com.example.controller;
 
-import com.eduask.beans.Dept;
-import com.eduask.beans.Emp;
-import com.eduask.service.DeptService;
-import com.eduask.service.EmpService;
+import com.example.beans.Dept;
+import com.example.beans.Emp;
+import com.example.service.DeptService;
+import com.example.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/10/10.
  */
-@SessionAttributes(value = "emp1", types = com.eduask.beans.Emp.class)
+@SessionAttributes(value = "emp1", types = com.example.beans.Emp.class)
 @RequestMapping("/HelloWorld")
 @Controller
 public class HelloWorldController {

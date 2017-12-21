@@ -1,6 +1,6 @@
-package com.eduask.controller;
+package com.example.controller;
 
-import com.eduask.beans.Person;
+import com.example.beans.Person;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;

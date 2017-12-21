@@ -1,6 +1,6 @@
-package com.eduask.dao;
+package com.example.dao;
 
-import com.eduask.beans.Dept;
+import com.example.beans.Dept;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

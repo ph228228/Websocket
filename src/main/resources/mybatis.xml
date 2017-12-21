@@ -7,7 +7,7 @@
         <setting name="cacheEnabled" value="true"/>
     </settings>
     <typeAliases>
-        <package name="com.eduask.beans"/>
+        <package name="com.example.beans"/>
     </typeAliases>
     <databaseIdProvider type="DB_VENDOR">
         <property name="MySQL" value="mysql"/>

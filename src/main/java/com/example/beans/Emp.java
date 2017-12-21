@@ -1,4 +1,4 @@
-package com.eduask.beans;
+package com.example.beans;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.NumberFormat;

@@ -1,7 +1,7 @@
-package com.eduask.service;
+package com.example.service;
 
-import com.eduask.beans.Emp;
-import com.eduask.dao.EmpDao;
+import com.example.beans.Emp;
+import com.example.dao.EmpDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
