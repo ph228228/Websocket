@@ -40,7 +40,6 @@ window.onbeforeunload = function(){
 function setMessageInnerHTML(innerHTML){
 
     innerHTML=eval("("+innerHTML+")")
-    //innerHTML=JSON.parse(innerHTML);
    // if(innerHTML.address==roomAddress) {
         // 把滚动条滚动到底部
         $(".d_show").append("<div id='" + index + "'>" + innerHTML.msgsss + "</div>");

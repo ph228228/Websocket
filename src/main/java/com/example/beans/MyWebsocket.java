@@ -1,7 +1,6 @@
 package com.example.beans;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
