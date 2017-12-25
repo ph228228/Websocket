@@ -17,6 +17,6 @@
         msg:<input type="text" name="desc">
         <input type="submit">
     </form>
-
+    <a href="${pageContext.request.contextPath}/danmu/socket">socket测试</a><br>
 </body>
 </html>
