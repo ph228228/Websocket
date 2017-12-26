@@ -2,6 +2,7 @@ var websocket=null;
 var _top=80;
 var index=0;
 var host=window.location.host;
+console.log(host);
 //判断当前浏览器是否支持WebSocket
 if('WebSocket' in window){
     websocket=new WebSocket("ws://"+host+"/websocket/"+sign);

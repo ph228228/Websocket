@@ -3,10 +3,7 @@ package com.example.beans;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -45,7 +42,7 @@ public class MyWebsocket {
         if (sessionPools.containsKey(this.roomCode)) {
             sessionPools.get(this.roomCode).add(this);
         } else {
-            sessionPools.put(this.roomCode, new ArrayList<MyWebsocket>());
+            sessionPools.put(this.roomCode, new LinkedList<MyWebsocket>());
             sessionPools.get(this.roomCode).add(this);
         }
 
