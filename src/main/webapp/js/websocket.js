@@ -9,7 +9,7 @@ if('WebSocket' in window){
 
 }
 else{
-    alert("Not Support WebSocket!");
+    alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器");
 }
 
 //连接发生错误的回调方法
