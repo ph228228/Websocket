@@ -50,6 +50,7 @@
         <th>DELETE</th>
         <th>EDIT</th>
     </tr>
+
     <c:forEach var="emp1" items="${ok}">
         <tr>
             <th>${emp1.emp_id}</th>

@@ -18,5 +18,7 @@
         <input type="submit">
     </form>
     <a href="${pageContext.request.contextPath}/danmu/socket">socket测试</a><br>
+
+    <a href="${pageContext.request.contextPath}/danmu/loginPrepare">登陆</a>
 </body>
 </html>

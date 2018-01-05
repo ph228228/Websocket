@@ -147,6 +147,7 @@
     </style>
 </head>
 <body>
+${requestScope.model}
 <a href="#" id="startDm">开启弹幕</a>
 <!-- dm start -->
 <div class="dm">
@@ -170,7 +171,7 @@
 </div>
 <!-- end dm-->
 <script type="text/javascript">
-    var sign="${requestScope.sign}";
+    var roomNum="${requestScope.roomNum}";
 </script>
 <script type="text/javascript"
         src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>

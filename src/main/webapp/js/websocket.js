@@ -5,7 +5,7 @@ var host=window.location.host;
 console.log(host);
 //判断当前浏览器是否支持WebSocket
 if('WebSocket' in window){
-    websocket=new WebSocket("ws://"+host+"/websocket/"+sign);
+    websocket=new WebSocket("ws://"+host+"/ws?roomNum="+roomNum);
 
 }
 else{
@@ -55,6 +55,6 @@ function send(){
     $(".s_text").val("");
     websocket.send(JSON.stringify({
         msgsss:message,
-        address:sign
+        address:roomNum
     }));
 }

@@ -1,55 +1,64 @@
 package com.example.inteceptor;
-import com.example.beans.Message;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class MyWebSocketHandler implements WebSocketHandler {
 
-//    @Autowired
-//    private youandmeService youandmeService;
-
-    //当MyWebSocketHandler类被加载时就会创建该Map，随类而生
-    public static final Map<Integer, WebSocketSession> userSocketSessionMap;
-
+    //concurrent包的线程安全Map，用来存放每个客户端对应的MyWebSocket对象。其中key为房间号标识
+    private volatile static Map<String, List<WebSocketSession>> sessionPools;
     static {
-        userSocketSessionMap = new HashMap<Integer, WebSocketSession>();
+        sessionPools = new ConcurrentHashMap();
     }
-
     //握手实现连接后
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
-        int uid = (Integer) webSocketSession.getAttributes().get("uid");
-        if (userSocketSessionMap.get(uid) == null) {
-            userSocketSessionMap.put(uid, webSocketSession);
+        String roomCode= (String) webSocketSession.getAttributes().get("roomNum");
+        //将连接地址的参数roomcode的值放入变量roomCode中
+        if (sessionPools.containsKey(roomCode)) {
+            sessionPools.get(roomCode).add(webSocketSession);
+        } else {
+            sessionPools.put(roomCode, new LinkedList<WebSocketSession>());
+            sessionPools.get(roomCode).add(webSocketSession);
         }
+
+
     }
 
     //发送信息前的处理
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
+        // 把客户端的消息解析为JSON对象
+        JSONObject jsonObject = JSONObject.fromObject(webSocketMessage.getPayload().toString());
+        //遍历map集合，将消息发送至同一个房间下的session
+        Iterator<Map.Entry<String, List<WebSocketSession>>> iterator = sessionPools.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, List<WebSocketSession>> entry = iterator.next();
+            if (entry.getKey().equals(webSocketSession.getAttributes().get("roomNum"))) {
+                //判断若是为同一个房间，则遍历房间内的session，并发送消息
+                for (WebSocketSession item : entry.getValue()) {
+                    jsonObject.put("isSelf", item.equals(webSocketSession));
+                    try {
 
-        if(webSocketMessage.getPayloadLength()==0)return;
+                        // 添加本条消息是否为当前会话本身发的标志
+                        item.sendMessage(new TextMessage(jsonObject.toString()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            }
+        }
 
-        //得到Socket通道中的数据并转化为Message对象
-        Message msg=new Gson().fromJson(webSocketMessage.getPayload().toString(),Message.class);
-
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        msg.setMessageDate(now);
-        //将信息保存至数据库
-        //youandmeService.addMessage(msg.getFromId(),msg.getFromName(),msg.getToId(),msg.getMessageText(),msg.getMessageDate());
-
-        //发送Socket信息
-        sendMessageToUser(msg.getToId(), new TextMessage(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(msg)));
     }
 
-    public void handleTransportError(WebSocketSession webSocketSession, Throwable throwable) throws Exception {
+
+
+
+    public  void  handleTransportError(WebSocketSession webSocketSession, Throwable throwable) throws Exception {
 
     }
 
@@ -64,28 +73,55 @@ public class MyWebSocketHandler implements WebSocketHandler {
      * @throws Exception
      */
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
-
-        System.out.println("WebSocket:"+webSocketSession.getAttributes().get("uid")+"close connection");
-        Iterator<Map.Entry<Integer,WebSocketSession>> iterator = userSocketSessionMap.entrySet().iterator();
-        while(iterator.hasNext()){
-            Map.Entry<Integer,WebSocketSession> entry = iterator.next();
-            if(entry.getValue().getAttributes().get("uid")==webSocketSession.getAttributes().get("uid")){
-                userSocketSessionMap.remove(webSocketSession.getAttributes().get("uid"));
-                System.out.println("WebSocket in staticMap:" + webSocketSession.getAttributes().get("uid") + "removed");
-            }
-        }
+        sessionPools.get(webSocketSession.getAttributes().get("roomNum")).remove(webSocketSession);
+        webSocketSession.close();
     }
 
     public boolean supportsPartialMessages() {
         return false;
     }
 
-    //发送信息的实现
-    public void sendMessageToUser(int uid, TextMessage message)
-            throws IOException {
-        WebSocketSession session = userSocketSessionMap.get(uid);
-        if (session != null && session.isOpen()) {
-            session.sendMessage(message);
-        }
+    /**
+     * 本方法用于处理玩家发送的普通消息
+     * @param webSocketSession
+     * @param webSocketMessage
+     */
+    public void sendUsualMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage){
+
+    }
+    /**
+     * 本方法用于处理玩家发送的指令消息
+     * @param webSocketSession
+     * @param webSocketMessage
+     */
+    public void sendCommandMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage){
+
+    }
+
+    /**
+     * 本方法用于处理玩家发送给管理员的建议
+     * @param webSocketSession
+     * @param webSocketMessage
+     */
+    public void sendAdviceMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage){
+
+    }
+
+    /**
+     * 本方法用于处理客户端发送的指令
+     * @param webSocketSession
+     * @param webSocketMessage
+     */
+    public void usualFromClient(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage){
+
+    }
+
+    /**
+     * 本方法用于处理客户端发送的图片
+     * @param webSocketSession
+     * @param webSocketMessage
+     */
+    public void pictureFromClient(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage){
+
     }
 }

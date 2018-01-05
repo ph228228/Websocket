@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import com.example.beans.Person;
+import com.example.beans.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -19,9 +22,26 @@ import java.util.Map;
 @Controller
 public class DanmuController {
     @GetMapping(value = "socket")
-    public String socket(@RequestParam(required = false) String sign, Map<String,Object> map){
-        map.put("sign",sign);
+    public String socket(@RequestParam(value = "roomNum",required = false) String roomNum, Map<String,Object> map, HttpServletRequest request, HttpServletResponse response){
+        Cookie[] cookies = request.getCookies();
+
+        map.put("roomNum",roomNum);
         return "webSocket";
     }
 
+    @ModelAttribute
+    public void prepare(HttpServletRequest request){
+        request.setAttribute("model","aaa");
+    }
+    @GetMapping("/loginPrepare")
+    public String loginPrepare(Map<String,Object> map){
+        map.put("user",new User());
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(){
+
+        return "redirect:/danmu/socket";
+    }
 }
